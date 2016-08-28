@@ -15,18 +15,19 @@ db.once('open', function() {
 
   var user = mongoose.model('user', userSchema);
 
-  var newUser = new user({ username: 'Sandy', password: 'fuckyou' });
-  console.log(newUser.username);
-
-  newUser.save(function(){
-    user.find(function (err, user) {
-      if (err) return console.error(err);
-      console.log(user);
+  var insert = function(newUser){
+    var newUser = new user({ username: newUser.name, password: newUser.pass });
+    console.log(newUser.username);
+    newUser.save(function (err, user) {
+      var res = {};
+      if (err) res.error = true;
+      else res.error=false;
+          return res;
     });
-  });
-
-  //assert.equal(query.exec().constructor, require('bluebird'));
-
-
+  }
 
 });
+
+module.exports = {
+  insert:insert
+}
