@@ -7,7 +7,10 @@
 var app = require('../app');
 var debug = require('debug')('cet_chat:server');
 var http = require('http');
-
+var s = http.Server(app);
+var io = require('socket.io')(s);
+var socketfile = require('../socket');
+io = socketfile.addsockets(io);
 /**
  * Get port from environment and store in Express.
  */
@@ -24,7 +27,7 @@ var server = http.createServer(app);
 /**
  * Listen on provided port, on all network interfaces.
  */
-
+io.listen(server);
 server.listen(port);
 server.on('error', onError);
 server.on('listening', onListening);
@@ -87,4 +90,5 @@ function onListening() {
     ? 'pipe ' + addr
     : 'port ' + addr.port;
   debug('Listening on ' + bind);
+  console.log('Listening on '+bind);
 }
