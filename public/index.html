@@ -52,7 +52,7 @@
                 <li><a href="#">Another action</a></li>
                 <li><a href="#">Something else here</a></li>
                 <li role="separator" class="divider"></li>
-                <li><a href="#">Separated link</a></li>
+                <li><a href="#" onclick = 'test()'>Separated link</a></li>
               </ul>
             </li>
           </ul>
@@ -61,7 +61,12 @@
     </nav>
     <script src="/socket.io/socket.io.js"></script>
     <script>
-    var socket = io();
+    var socket = io('test');
+    var test = function(){
+      var room ={};
+      room.name = "Rishi";
+      socket.emit('createRoom',room);
+    }
   </script>
   </body>
 
