@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
-
 var User = require('../users');
+var bcrypt = require('bcrypt');
 /* GET users listing. */
 router.post('/signUp', function(req, res, next) {
   console.log("Sign up called");
@@ -19,5 +19,30 @@ router.post('/signUp', function(req, res, next) {
       res.send(msg);
     });
 });
-
+router.post('/signin',function(req,res,next){
+  User.findOne({username:req.body.name},function(err,user){
+    if(err){
+      res.status=500;
+      res.send(err);
+    }else{
+      console.log(user);
+      bcrypt.compare(req.body.pass,user.password,function(err,result){
+        if(err){
+          res.status=500;
+          res.send(err);
+        }else{
+          if(result){
+            req.session.user = {};
+            req.session.user.id = user._id;
+            req.session.user.name = user.name;
+            res.status=200;
+            res.send("Your are now logged in !");
+          }else{
+            res.send("Password doesn't match");
+          }
+        }
+      });
+    }
+  });
+});
 module.exports = router;
