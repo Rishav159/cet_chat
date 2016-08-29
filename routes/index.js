@@ -1,10 +1,11 @@
 var express = require('express');
 var router = express.Router();
 var User = require('./users');
+var path=require('path');
 /* GET home page. */
 router.get('/sampleroom',function(req,res,next){
   if(req.session.user){
-    res.sendFile(__dirname+'../public/sampleroom.html');
+    res.sendFile(path.resolve(__dirname+'/../public/sampleroom.html'));
   }else{
     res.redirect('/');
   }

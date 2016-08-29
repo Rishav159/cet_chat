@@ -1,5 +1,5 @@
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/cet-chat');
+//mongoose.connect('mongodb://localhost/cet-chat');
 
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
