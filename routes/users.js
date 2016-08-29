@@ -48,6 +48,11 @@ router.post('/signin',function(req,res,next){
     }
   });
 });
+router.post('/signout',function(req,res,next){
+  delete req.session.user;
+  res.status=200;
+  res.send("You are now signed out ");
+});
 router.post('/room/joinroom',function(req,res,next){
   User.findByIdAndUpdate(req.session.user.id,
     {$addToSet: {"rooms": req.body.roomname}},
@@ -60,5 +65,4 @@ router.post('/room/joinroom',function(req,res,next){
           console.log(err);
   });
 });
-
 module.exports = router;

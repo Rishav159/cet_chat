@@ -4,7 +4,7 @@ var bcrypt = require('bcrypt');
 SALT_WORK_FACTOR = 10;
 mongoose.Promise = global.Promise;
 mongoose.connect('mongodb://localhost/cet-chat');
-var Room = require('room');
+var Room = require('../models/room');
 
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
