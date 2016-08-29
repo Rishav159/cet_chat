@@ -7,7 +7,6 @@ mongoose.connect('mongodb://localhost/cet-chat');
 
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
-db.once('open', function() {
 
   var userSchema = mongoose.Schema({
     username: {type:String, required:true, unique:true},
@@ -16,29 +15,26 @@ db.once('open', function() {
   });
 
 
-  userSchema.methods.insert = function(newUser){
+  userSchema.methods.insert = function(){
     //generate salt
     bcrypt.genSalt(SALT_WORK_FACTOR, function(err, salt) {
        if (err) return next(err);
 
        // hash the password using our new salt
-          bcrypt.hash(newUser.pass, salt, function(err, hash) {
-              if (err) return next(err);
+          bcrypt.hash(this.password, salt, function(err, hash) {
+              if (err) console.log("There is bcrypt error");
 
               // override the cleartext password with the hashed one
-              newUser.pass = hash;
-              next();
+              newUser.password = hash;
           });
     });
-
-    var newUser = new user({ username: newUser.name, password: newUser.pass });
-    console.log(newUser.username);
-    newUser.save(function (err, user) {
+  this.save(function (err, user) {
       var res = {};
       if (err) res.error = true;
       else res.error=false;
-          return res;
+      return res;
     });
+
   }
 
   userSchema.methods.checkUser = function(inputUser){
@@ -57,11 +53,8 @@ db.once('open', function() {
       });
       return chkres;
     });
-
   }
 
-var user = mongoose.model('user', userSchema);
 
-});
 
 module.exports = mongoose.model('User', userSchema);
