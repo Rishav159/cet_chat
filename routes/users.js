@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 
-var User = require('../users');
+var User = require('../models/users');
 /* GET users listing. */
 router.post('/signUp', function(req, res, next) {
   console.log("Sign up called");
