@@ -57,10 +57,12 @@ router.post('/room/joinroom',function(req,res,next){
   User.findByIdAndUpdate(req.session.user.id,
     {$addToSet: {"rooms": req.body.roomname}},
     {safe: true, upsert: true},
-    function(err, model) {
+    function(err, user) {
         console.log(err);
     }
   );
-  Room.update({name:req.body.roomname},{ $addToSet: { "members": req.body.user.id }}, options, callback);
+  Room.update({name:req.body.roomname},{ $addToSet: { "members": req.body.user.id }}, function(err, room) {
+          console.log(err);
+  });
 });
 module.exports = router;
