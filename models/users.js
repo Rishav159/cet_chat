@@ -35,8 +35,4 @@ db.on('error', console.error.bind(console, 'connection error:'));
       });
   });
 
-  userSchema.methods.addToRoom = function(room){
-    user.findOne
-  }
-
 module.exports = mongoose.model('User', userSchema);

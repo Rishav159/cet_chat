@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 
 var User = require('../models/users');
+var Room = require('../models/room');
 var bcrypt = require('bcrypt');
 
 /* GET users listing. */
@@ -47,4 +48,15 @@ router.post('/signin',function(req,res,next){
     }
   });
 });
+router.post('/room/joinroom',function(req,res,next){
+  User.findByIdAndUpdate(req.session.user.id,
+    {$addToSet: {"rooms": req.body.roomname}},
+    {safe: true, upsert: true},
+    function(err, model) {
+        console.log(err);
+    }
+  );
+  Room.update({name:req.body.roomname},{ $addToSet: { "members": req.body.user.id }}, options, callback);
+});
+
 module.exports = router;
