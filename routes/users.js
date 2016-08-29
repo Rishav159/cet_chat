@@ -47,4 +47,9 @@ router.post('/signin',function(req,res,next){
     }
   });
 });
+router.post('/signout',function(req,res,next){
+  delete req.session.user;
+  res.status=200;
+  res.send("You are now signed out ");
+});
 module.exports = router;
