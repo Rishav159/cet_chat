@@ -4,7 +4,7 @@ var bcrypt = require('bcrypt');
 SALT_WORK_FACTOR = 10;
 mongoose.Promise = global.Promise;
 mongoose.connect('mongodb://localhost/cet-chat');
-
+var Room = require('room');
 
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
@@ -34,24 +34,9 @@ db.on('error', console.error.bind(console, 'connection error:'));
           });
       });
   });
-  userSchema.methods.checkUser = function(inputUser){
-    var pass; var chkres={};
-    chkres.err=false;
-    user.findOne({name: inputUser.name},function(err,user){
-      pass=user.pass;
-      bcrypt.compare(inputUser.pass, pass, function(err, isMatch) {
-        if (err)
-          chkres.err=true;
-          else {
-            chkres.isMatch=isMatch;
-          }
 
-        //cb(null, isMatch);
-      });
-      return chkres;
-    });
+  userSchema.methods.addToRoom = function(room){
+    user.findOne
   }
-
-
 
 module.exports = mongoose.model('User', userSchema);
