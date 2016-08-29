@@ -1,10 +1,7 @@
-var mongoose = require('mongoose');
 var assert = require('assert');
 var bcrypt = require('bcrypt');
+var mongoose = require('mongoose');
 SALT_WORK_FACTOR = 10;
-mongoose.Promise = global.Promise;
-mongoose.connect('mongodb://localhost/cet-chat');
-var Room = require('../models/room');
 
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
