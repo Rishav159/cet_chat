@@ -91,17 +91,15 @@
 
 <!-- Latest compiled and minified JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-<script type="text/javascript">
+<!-- <script type="text/javascript">
   $(document).ready(function(){
     $.ajax({
       url : '/users/getUsername',
       method : 'POST',
-      success : function(name){
-        console.log(name);
-      }
+
     });
   });
-</script>
+</script> -->
 <script type="text/javascript">
   $(document).ready(function(){
     $.ajax({
@@ -111,15 +109,23 @@
         console.log(data);
         var divi = $('#test');
         console.log(divi);
-        for(var i=0;i<data.length;i++){
-          divi.append("<br>");
-          divi.append(data[i].name);
-          divi.append("<br>");
-          divi.append(data[i].createdBy.name);
-          divi.append("<br>");divi.append("<br>");
-        }
       }
     })
   });
 </script>
+<script type="text/javascript">
+  $(document).ready(function(){
+    $.ajax({
+      url : '/users/getUsername',
+      method : 'POST',
+      success : function(name){
+        console.log(name);
+        $('#username').html(name);
+      },
+      error : function(err){
+        console.log(err);
+      }
+    })
+  });
+  </script>
 </html>
