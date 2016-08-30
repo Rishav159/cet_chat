@@ -2,7 +2,13 @@
 <html>
   <head>
     <title>Cet Chat</title>
-
+  <style>
+  .box{background-color: lightgrey;
+    width :20%;
+    border: 25px solid green;
+    padding: 25px;
+    margin: 25px;}
+  </style>
 
   </head>
   <body>
@@ -78,6 +84,9 @@
       <button type="submit" class="btn btn-default">Create room</button>
     </form>
   </div>
+  <div id="roomadd">
+
+  </div>
   </body>
 
 
@@ -109,6 +118,13 @@
         console.log(data);
         var divi = $('#test');
         console.log(divi);
+
+        for(var i=0;i<data.length;i++){
+          var room = data[i];
+          var roomname = $("<div/>",{"text":room.name,"class":"box"});
+          $('#roomadd').prepend($('<div class="box">'+room.name+'</div>'));
+        };
+
       }
     })
   });
