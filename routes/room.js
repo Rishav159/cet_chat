@@ -26,7 +26,7 @@ router.get('/:roomname/joinroom',function(req,res,next){
             //User joined the room..now serve the room page
             console.log("User joined that room");
             //res.status=200;
-            res.sendFile(__dirname+'../public/room.html');
+            res.sendFile(path.resolve(__dirname+'/../public/room.html'));
           }
       });
     }
@@ -51,6 +51,35 @@ router.get('/:roomname/roomdata',function(req,res,next){
     }
   });
 });
+router.get('/:roomname/leaveroom',function(req,res,next){
+  Rooms.findOne({name : req.params.roomname},function(err,room){
+    if(err){
+      res.status=500;
+      res.send("There was some error");
+    }else{
+      //If room is found
+      if(room){
+        Rooms.update({name:room.name},{ $pull: { "members": {"id" : req.session.user.id} }}, function(err,n) {
+            if(err){
+              console.log(err);
+              res.status=500;
+              res.send("There was some error");
+            }else{
+              //User joined the room..now serve the room page
+              console.log(n);
+              console.log("User left that room");
+              //res.status=200;
+              res.redirect('/dashboard');
+            }
+        });
+      }else{
+        //Room not found
+        res.status=200;
+        res.redirect('/dashboard');
+      }
+    }
+  });
+});
 router.get('/:roomname',function(req,res,next){
   console.log(req.params.roomname + " Called");
   //Find the given room
@@ -65,7 +94,7 @@ router.get('/:roomname',function(req,res,next){
         var ispresent=false;
         //Check if the logged in user is present in the room
         for(var i=0;i<room.members.length;i++){
-          console.log("Comparing "+room.members[i].id+" and "+ req.session.user.id);
+          //console.log("Comparing "+room.members[i].id+" and "+ req.session.user.id);
           if(room.members[i].id == req.session.user.id){
             ispresent = true;break;
           }
@@ -73,7 +102,7 @@ router.get('/:roomname',function(req,res,next){
         //If present , then simply serve the room page
         if(ispresent){
           console.log("User already present in the room");
-          res.sendFile(__dirname+'../public/room.html');
+          res.sendFile(path.resolve(__dirname+'/../public/room.html'));
         }
         else{
           //Otherwise join that room

@@ -109,96 +109,10 @@
               <div class="panel-heading">
                  MEMBERS
               </div>
-              <div class="panel-body">
-                  <ul class="media-list">
-
-                      <li class="media">
-
-                          <div class="media-body">
-
-                              <div class="media">
-                                  <div class="media-body" >
-                                      <h5>Alex Deo | User </h5>
-                                  </div>
-                              </div>
-
-                          </div>
-                      </li>
-                      <li class="media">
-
-                          <div class="media-body">
-
-                              <div class="media">
-                                  <div class="media-body" >
-                                      <h5>Jhon Rexa | User </h5>
-                                  </div>
-                              </div>
-
-                          </div>
-                      </li>
-                      <li class="media">
-
-                          <div class="media-body">
-
-                              <div class="media">
-                                  <div class="media-body" >
-                                      <h5>Alex Deo | User </h5>
-                                  </div>
-                              </div>
-
-                          </div>
-                      </li>
-                      <li class="media">
-
-                          <div class="media-body">
-
-                              <div class="media">
-                                  <div class="media-body" >
-                                      <h5>Jhon Rexa | User </h5>
-                                  </div>
-                              </div>
-
-                          </div>
-                      </li>
-                      <li class="media">
-
-                          <div class="media-body">
-
-                              <div class="media">
-                                  <div class="media-body" >
-                                      <h5>Alex Deo | User </h5>
-                                  </div>
-                              </div>
-
-                          </div>
-                      </li>
-                      <li class="media">
-
-                          <div class="media-body">
-
-                              <div class="media">
-                                  <div class="media-body" >
-                                      <h5>Jhon Rexa | User </h5>
-                                  </div>
-                              </div>
-
-                          </div>
-                      </li>
-                      <li class="media">
-
-                          <div class="media-body">
-
-                              <div class="media">
-                                  <div class="media-body" >
-                                      <h5>Alex Deo | User </h5>
-                                  </div>
-                              </div>
-
-                          </div>
-                      </li>
-                  </ul>
+              <div class="panel-body" id="members">
               </div>
-          </div>
+            </div>
+            <a href="/room/roomname/leaveroom" class="btn btn-primary">Leave Room</a>
       </div>
     </div>
   </div>
@@ -233,11 +147,15 @@
   <script type="text/javascript">
     $(document).ready(function(){
       $.ajax({
-        url : '/room/:roomname',
-        method : 'POST',
-        success : function(name){
-          console.log(name);
-          $('#username').html(name);
+        url : '/room/roomname/roomdata',
+        method : 'GET',
+        success : function(room){
+          console.log(room);
+          $('#roomname').html(room.name);
+          var mem = $('#members');
+          for(var i=0;i<room.members.length;i++){
+            mem.append("<h5>" + room.members[i].name + "</h5><br>");
+          }
         },
         error : function(err){
           console.log(err);
