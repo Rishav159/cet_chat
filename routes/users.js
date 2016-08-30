@@ -17,7 +17,10 @@ router.post('/signUp', function(req, res, next) {
         msg=err;
       }else{
         res.status = 200;
-        msg="Done !";
+        req.session.user = {};
+        req.session.user.id = user._id;
+        req.session.user.name = user.name;
+        res.redirect('/dashboard')
       }
       res.send(msg);
     });
@@ -39,7 +42,7 @@ router.post('/signin',function(req,res,next){
             req.session.user.id = user._id;
             req.session.user.name = user.name;
             res.status=200;
-            res.send("Your are now logged in !");
+            res.redirect('/dashboard')
           }else{
             res.send("Password doesn't match");
           }
