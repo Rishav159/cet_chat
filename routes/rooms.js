@@ -30,7 +30,7 @@ router.post('/createRoom', function(req,res,next){
             msg=err;
           }else{
             res.status = 200;
-            msg="Done !";
+            res.redirect("/room/"+req.body.name)
           }
           res.send(msg);
         });

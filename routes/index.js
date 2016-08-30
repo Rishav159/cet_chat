@@ -25,6 +25,6 @@ router.get('/dashboard',isauthenticated,function(req,res,next){
   }
 });
 router.get('/', function(req, res, next) {
-  res.sendFile(__dirname+'../public/index.html');
+  res.sendFile(__dirname+'/../public/index.html');
 });
 module.exports = router;
