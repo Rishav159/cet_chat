@@ -3,6 +3,7 @@ var router = express.Router();
 var path=require('path');
 var Rooms = require('../models/room');
 var User = require('../models/users');
+var mongoose = require('mongoose');
 /* GET home page. */
 router.get('/:roomname/joinroom',function(req,res,next){
   User.findById(req.session.user.id,function(err,user){
@@ -59,7 +60,8 @@ router.get('/:roomname/leaveroom',function(req,res,next){
     }else{
       //If room is found
       if(room){
-        Rooms.update({name:room.name},{ $pull: { "members": {"id" : req.session.user.id} }}, function(err,n) {
+        var userid  = mongoose.Types.ObjectId(req.session.user.id);
+        Rooms.update({name:room.name},{ $pull: { "members": {"id" : userid} }}, function(err,n) {
             if(err){
               console.log(err);
               res.status=500;
