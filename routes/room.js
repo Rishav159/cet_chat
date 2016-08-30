@@ -5,17 +5,23 @@ var User = require('../models/users');
 var mongoose = require('mongoose');
 mongoose.Promise = global.Promise
 router.post('/createRoom', function(req,res,next){
-  User.findById(req.body.user.id,function(err,user){
+  User.findById(req.session.user.id,function(err,user){
     if(err){
       console.log(err);
       res.status=500;
       res.send("There was some error");
     }else{
+      var userobj = {
+        id : user._id,
+        name : user.username
+      }
+      //console.log(userobj);
       var createRoom = new Room({
         name:req.body.name,
-        createdBy:user,
-        $addToSet: { "members": user }
+        createdBy:userobj,
+        members : new Array(userobj)
       });
+      //console.log(createRoom);
       createRoom.save(function (err, room) {
           var msg;
           if (err){
@@ -38,21 +44,6 @@ router.post('/getRooms',function(req,res,next){
       res.status=500;
       res.send("There was some problem !");
     }else{
-      for(var i=0;i<docs.length;i++){
-        var id = docs[i].createdBy;
-        var name;
-        User.findById(id).exec(function(err,userobj){
-          console.log("Step 1");
-          if(err){
-            res.status=500;
-            res.send("Room problem");
-          }else{
-            console.log("Step 2");
-            name=userobj.username;
-            docs[i].createdBy=name;
-          }
-        }.bind(this));
-      }
       res.send(docs);
     }
   });

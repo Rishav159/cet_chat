@@ -6,7 +6,12 @@ db.on('error', console.error.bind(console, 'connection error:'));
 
   var roomSchema = mongoose.Schema({
     name: {type:String, required:true, unique:true},
-    createdBy: {type:Schema.Types.ObjectId , ref : 'User'},
-    members: [{type:Schema.Types.ObjectId , ref : 'User'}]
+    createdBy: {
+      id : Schema.Types.ObjectId,
+      name : {
+        type:String
+      }
+    },
+    members: Array
   });
   module.exports = mongoose.model('Room', roomSchema);
