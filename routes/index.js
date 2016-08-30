@@ -10,6 +10,13 @@ router.get('/sampleroom',function(req,res,next){
     res.redirect('/');
   }
 });
+router.get('/dashboard',function(req,res,next){
+  if(res.session.user){
+    res.sendFile(path.resolve(__dirname+'/../public/dashboard.html'));
+  }else{
+    res.redirect('/');
+  }
+});
 router.get('/', function(req, res, next) {
   res.sendFile(__dirname+'../public/index.html');
 });
