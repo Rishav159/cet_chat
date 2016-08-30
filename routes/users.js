@@ -56,5 +56,20 @@ router.post('/signout',function(req,res,next){
   res.status=200;
   res.send("You are now signed out ");
 });
-
+router.post('/getUsername',function(req,res,next){
+  User.findById(req.session.user.id,function(err,user){
+    if(err){
+      res.status=500;
+      res.send(err);
+    }else{
+      if(user){
+        console.log(user);
+        res.status=200;
+        res.send(user.username);
+      }else{
+        res.redirect('/user/signin');
+      }
+    }
+  });
+});
 module.exports = router;

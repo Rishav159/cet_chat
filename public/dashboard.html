@@ -86,11 +86,10 @@
 <script type="text/javascript">
   $(document).ready(function(){
     $.ajax({
-      url : '/rooms/getRooms',
+      url : '/users/getUsername',
       method : 'POST',
-      success : function(data){
-        console.log(data);
-        $('#test').html(data);
+      success : function(name){
+        console.log(name);
       }
     });
   });
