@@ -49,7 +49,8 @@
       <button type="submit" class="btn btn-default">Create room</button>
     </form>
   </div>
-  <div id="roomadd">
+
+  <div class="panel panel-primary" id="roomadd">
 
   </div>
   </body>
@@ -93,7 +94,7 @@
         for(var i=0;i<data.length;i++){
           var room = data[i];
           var roomname = $("<div/>",{"text":room.name,"class":"box"});
-          $('#roomadd').prepend($('<div class="box">'+room.name+' <a href="/room/'+room.name+'" class="btn btn-info" role="button">Enter</a></div>'));
+          $('#roomadd').append($('<div class="panel-heading">'+room.name+'</div>')).append($('<div class="panel-body"><a href="/room/'+room.name+'" class="btn btn-success" role="button">Enter</a></div>'));
         };
 
       }
