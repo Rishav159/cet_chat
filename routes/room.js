@@ -27,7 +27,7 @@ router.get('/:roomname/joinroom',function(req,res,next){
             //User joined the room..now serve the room page
             console.log("User joined that room");
             //res.status=200;
-            res.sendFile(path.resolve(__dirname+'/../public/room.html'));
+            res.redirect('/room/'+req.params.roomname);
           }
       });
     }
