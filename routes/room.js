@@ -49,20 +49,24 @@ router.post('/getRooms',function(req,res,next){
   });
 });
 router.post('/joinroom',function(req,res,next){
-  User.findById(req.body.user.id,function(err,user){
+  User.findById(req.session.user.id,function(err,user){
     if(err){
       console.log(err);
       res.status=500;
       res.send("There was some error");
     }else{
-      Room.update({name:req.body.roomname},{ $addToSet: { "members": user }}, function(err, room) {
+      var userobj = {
+        id : user._id,
+        name : user.username
+      }
+      Room.update({name:req.body.roomname},{ $addToSet: { "members": userobj }}, function(err, room) {
           if(err){
             console.log(err);
             res.status=500;
             res.send("There was some error");
           }else{
             res.status=200;
-            res.send("Joined room " + room.name);
+            res.send("Joined room " + req.body.roomname);
           }
       });
     }
