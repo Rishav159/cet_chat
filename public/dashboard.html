@@ -2,6 +2,13 @@
 <html>
   <head>
     <title>Cet Chat</title>
+  <style>
+  .box{background-color: lightgrey;
+    width :20%;
+    border: 25px solid green;
+    padding: 25px;
+    margin: 25px;}
+  </style>
   </head>
   <body>
     <nav class="navbar navbar-default">
@@ -42,6 +49,9 @@
       <button type="submit" class="btn btn-default">Create room</button>
     </form>
   </div>
+  <div id="roomadd">
+
+  </div>
   </body>
 
 
@@ -68,6 +78,42 @@
         }
       })
     });
+  });
+</script>
+<script type="text/javascript">
+  $(document).ready(function(){
+    $.ajax({
+      url:"/rooms/getRooms",
+      method:"POST",
+      success:function(data){
+        console.log(data);
+        var divi = $('#test');
+        console.log(divi);
+
+        for(var i=0;i<data.length;i++){
+          var room = data[i];
+          var roomname = $("<div/>",{"text":room.name,"class":"box"});
+          $('#roomadd').prepend($('<div class="box">'+room.name+'</div>'));
+        };
+
+      }
+    })
+  });
+</script>
+<script type="text/javascript">
+  $(document).ready(function(){
+    $.ajax({
+      url : '/users/getUsername',
+      method : 'POST',
+      success : function(name){
+        console.log(name);
+        $('#username').html(name);
+      },
+      error : function(err){
+        console.log(err);
+      }
+    })
+  });
   </script>
   <script type="text/javascript">
     $(document).ready(function(){
