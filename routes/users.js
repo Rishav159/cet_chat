@@ -4,7 +4,13 @@ var router = express.Router();
 var User = require('../models/users');
 var Room = require('../models/room');
 var bcrypt = require('bcrypt');
-
+var isauthenticated = function(req,res,next){
+  if(req.session.user){
+    next();
+  }else {
+    res.redirect('/');
+  }
+};
 /* GET users listing. */
 router.post('/signUp', function(req, res, next) {
   console.log("Sign up called");
@@ -51,7 +57,7 @@ router.post('/signin',function(req,res,next){
     }
   });
 });
-router.post('/signout',function(req,res,next){
+router.post('/signout',isauthenticated,function(req,res,next){
   delete req.session.user;
   res.status=200;
   res.send("You are now signed out ");
