@@ -51,10 +51,10 @@ router.post('/signin',function(req,res,next){
     }
   });
 });
-router.post('/signout',function(req,res,next){
+router.get('/signout',function(req,res,next){
   delete req.session.user;
   res.status=200;
-  res.send("You are now signed out ");
+  res.redirect('/');
 });
 router.post('/getUsername',function(req,res,next){
   User.findById(req.session.user.id,function(err,user){
