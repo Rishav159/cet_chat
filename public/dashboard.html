@@ -93,7 +93,7 @@
         for(var i=0;i<data.length;i++){
           var room = data[i];
           var roomname = $("<div/>",{"text":room.name,"class":"box"});
-          $('#roomadd').prepend($('<div class="box">'+room.name+'</div>'));
+          $('#roomadd').prepend($('<div class="box">'+room.name+' <a href="/room/'+room.name+'" class="btn btn-info" role="button">Enter</a></div>'));
         };
 
       }
