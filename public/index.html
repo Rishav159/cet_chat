@@ -77,15 +77,7 @@
         </div><!-- /.navbar-collapse -->
       </div><!-- /.container-fluid -->
     </nav>
-    <div id="test">
-      Something
-      <form method='post' action='/rooms/createRoom'>
-        <div class="form-group">
-          <input type="text" class="form-control" name = "name" placeholder="name"><br>
-        </div>
-        <button type="submit" class="btn btn-default">Create room</button>
-      </form>
-    </div>
+    
     <script src="/socket.io/socket.io.js"></script>
     <!-- <script>
     var socket = io('test');
@@ -109,24 +101,5 @@
 
 <!-- Latest compiled and minified JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-<script type="text/javascript">
-  $(document).ready(function(){
-    $.ajax({
-      url:"/rooms/getRooms",
-      method:"POST",
-      success:function(data){
-        console.log(data);
-        var divi = $('#test');
-        console.log(divi);
-        for(var i=0;i<data.length;i++){
-          divi.append("<br>");
-          divi.append(data[i].name);
-          divi.append("<br>");
-          divi.append(data[i].createdBy.name);
-          divi.append("<br>");divi.append("<br>");
-        }
-      }
-    })
-  });
-</script>
+
 </html>
