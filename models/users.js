@@ -8,8 +8,7 @@ db.on('error', console.error.bind(console, 'connection error:'));
 
   var userSchema = mongoose.Schema({
     username: {type:String, required:true, unique:true},
-    password: {type:String, required:true},
-    rooms: Array
+    password: {type:String, required:true}
   });
   userSchema.pre('save', function(next) {
       var user = this;

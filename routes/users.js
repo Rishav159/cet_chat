@@ -53,16 +53,5 @@ router.post('/signout',function(req,res,next){
   res.status=200;
   res.send("You are now signed out ");
 });
-router.post('/room/joinroom',function(req,res,next){
-  User.findByIdAndUpdate(req.session.user.id,
-    {$addToSet: {"rooms": req.body.roomname}},
-    {safe: true, upsert: true},
-    function(err, user) {
-        console.log(err);
-    }
-  );
-  Room.update({name:req.body.roomname},{ $addToSet: { "members": req.body.user.id }}, function(err, room) {
-          console.log(err);
-  });
-});
+
 module.exports = router;
