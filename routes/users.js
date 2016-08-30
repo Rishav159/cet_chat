@@ -4,7 +4,13 @@ var router = express.Router();
 var User = require('../models/users');
 var Room = require('../models/room');
 var bcrypt = require('bcrypt');
-
+var isauthenticated = function(req,res,next){
+  if(req.session.user){
+    next();
+  }else {
+    res.redirect('/');
+  }
+};
 /* GET users listing. */
 router.post('/signUp', function(req, res, next) {
   console.log("Sign up called");
@@ -31,31 +37,38 @@ router.post('/signin',function(req,res,next){
       res.status=500;
       res.send(err);
     }else{
-      console.log(user);
-      bcrypt.compare(req.body.pass,user.password,function(err,result){
-        if(err){
-          res.status=500;
-          res.send(err);
-        }else{
-          if(result){
-            req.session.user = {};
-            req.session.user.id = user._id;
-            req.session.user.name = user.name;
-            res.status=200;
-            res.redirect('/dashboard')
+      if(user){
+        console.log(user);
+        bcrypt.compare(req.body.pass,user.password,function(err,result){
+          if(err){
+            res.status=500;
+            res.send(err);
           }else{
-            res.send("Password doesn't match");
+            if(result){
+              req.session.user = {};
+              req.session.user.id = user._id;
+              req.session.user.name = user.name;
+              res.status=200;
+              res.redirect('/dashboard')
+            }else{
+              res.send("Password doesn't match");
+            }
           }
-        }
-      });
+        });
+      }else{
+        res.status=200;
+        res.send("Username doesnt exist");
+      }
     }
   });
 });
-router.post('/signout',function(req,res,next){
+
+router.post('/signout',isauthenticated,function(req,res,next){
   delete req.session.user;
   res.status=200;
-  res.send("You are now signed out ");
+  res.redirect('/');
 });
+
 router.post('/getUsername',function(req,res,next){
   User.findById(req.session.user.id,function(err,user){
     if(err){
