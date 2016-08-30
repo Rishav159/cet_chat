@@ -11,7 +11,7 @@ router.get('/sampleroom',function(req,res,next){
   }
 });
 router.get('/dashboard',function(req,res,next){
-  if(res.session.user){
+  if(req.session.user){
     res.sendFile(path.resolve(__dirname+'/../public/dashboard.html'));
   }else{
     res.redirect('/');
