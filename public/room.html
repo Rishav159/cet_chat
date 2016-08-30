@@ -112,7 +112,7 @@
               <div class="panel-body" id="members">
               </div>
             </div>
-            <a href="/room/roomname/leaveroom" class="btn btn-primary">Leave Room</a>
+            <a id="leaveroombtn" href="#" class="btn btn-primary">Leave Room</a>
       </div>
     </div>
   </div>
@@ -146,8 +146,12 @@
 
   <script type="text/javascript">
     $(document).ready(function(){
+      var url = window.location.href;
+      var location = url.lastIndexOf('/');
+      var roomname = url.substring(location+1);
+      $('#leaveroombtn').attr('href',"/room/"+roomname+"/leaveroom");
       $.ajax({
-        url : '/room/roomname/roomdata',
+        url : '/room/'+roomname+'/roomdata',
         method : 'GET',
         success : function(room){
           console.log(room);
